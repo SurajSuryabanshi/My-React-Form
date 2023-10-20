@@ -13,6 +13,8 @@ export default class NewProduct extends Component {
       quantity: '',
       price: '',
     };
+    // Create a ref for the file input
+    this.fileInput = React.createRef();
   }
 
   onChangeDescription = (e) => {
@@ -68,6 +70,7 @@ export default class NewProduct extends Component {
       price: '',
       file: null,
     });
+    this.clearForm();
   };
 
   clearForm = () => {
@@ -79,6 +82,10 @@ export default class NewProduct extends Component {
       price: '',
       file: null,
     });
+    // Reset the value of the file input
+    if (this.fileInput.current) {
+      this.fileInput.current.value = "";
+    }
   };
 
   render() {
@@ -92,6 +99,7 @@ export default class NewProduct extends Component {
           <Form.Control
             type="file"
             id="formFile"
+            ref={this.fileInput}
             onChange={this.onFileChange}
           />
         </Form.Group>

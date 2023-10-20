@@ -13,6 +13,13 @@ export default class NewShop extends Component {
       description: "",
       file: null,
     }
+    this.fileInput = React.createRef();
+
+    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onFileChange = this.onFileChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.clearForm = this.clearForm.bind(this);
   }
 
   onChangeDescription(e) {
@@ -44,6 +51,7 @@ export default class NewShop extends Component {
       description: "",
       file: null,
     });
+    this.clearForm();
   }
 
   clearForm = () => {
@@ -55,6 +63,9 @@ export default class NewShop extends Component {
       price: '',
       file: null,
     });
+    if (this.fileInput.current) {
+      this.fileInput.current.value = "";
+    }
   };
 
   render() {
@@ -62,7 +73,7 @@ export default class NewShop extends Component {
       <Form onSubmit={this.onSubmit}>
         <h1>New Shop</h1>
         <label htmlFor="formFile" className="form-label"></label>
-        <input className="form-control" type="file" id="formFile"  onChange={this.onFileChange}/>
+        <input className="form-control" type="file" id="formFile" ref={this.fileInput} onChange={this.onFileChange}/>
         <Form.Group className="mb-3">
           <Form.Control type="text" placeholder="Name" onChange={this.onChangeName} value={this.state.name} />
           <Form.Control type="text" placeholder="Description" onChange={this.onChangeDescription} value={this.state.description} />
@@ -73,8 +84,8 @@ export default class NewShop extends Component {
           </Button>
           {' '}
           <Button variant="primary" onClick={this.clearForm}>
-          Cancel
-        </Button>
+            Cancel
+          </Button>
         </div>
       </Form>
     );
